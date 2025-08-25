@@ -119,6 +119,7 @@
                         'Pemasangan Pelanggan Baru',
                         'Penarikan Kabel',
                         'Pemasangan Perangkat',
+                        'Pergantian Perangkat',
                         'Penambahan Perangkat',
                         'Perbaikan Koneksi',
                         'Pengecekan Koneksi'
