@@ -110,6 +110,7 @@
                         'Penarikan Kabel',
                         'Pemasangan Perangkat',
                         'Penambahan Perangkat',
+                        'Pergantian Perangkat',
                         'Perbaikan Koneksi',
                         'Pengecekan Koneksi'
                     ];
