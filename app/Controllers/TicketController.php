@@ -26,6 +26,9 @@ class TicketController extends BaseController
         $this->customerModel = new CustomerModel();
         $this->petugasModel = new PetugasModel();
         helper(['url', 'form', 'text']);
+
+        // Set timezone ke Asia/Jakarta untuk memastikan konsistensi waktu
+        date_default_timezone_set('Asia/Jakarta');
     }
 
     /**
@@ -73,7 +76,9 @@ class TicketController extends BaseController
         $customers = $this->customerModel->findAll();
         $petugas = $this->petugasModel->findAll();
 
-        $codeTicket = 'TKT-' . date('YmdHis') . '-' . random_string('numeric', 4);
+        // Generate kode tiket dengan timestamp yang akurat
+        $currentDateTime = new \DateTime('now', new \DateTimeZone('Asia/Jakarta'));
+        $codeTicket = 'TKT-' . $currentDateTime->format('YmdHis') . '-' . random_string('numeric', 4);
 
         $data = [
             'title' => 'Buat Tiket Baru',
@@ -91,6 +96,9 @@ class TicketController extends BaseController
      */
     public function store()
     {
+        // Buat objek DateTime dengan timezone Asia/Jakarta
+        $currentDateTime = new \DateTime('now', new \DateTimeZone('Asia/Jakarta'));
+
         $dataToSave = [
             'code_ticket' => $this->request->getPost('code_ticket'),
             'customer_id' => $this->request->getPost('customer_id') ?: null,
@@ -101,7 +109,7 @@ class TicketController extends BaseController
             'deskripsi' => $this->request->getPost('deskripsi'),
             'status' => $this->request->getPost('status'),
             'prioritas' => $this->request->getPost('prioritas'),
-            'tanggal_buat' => date('Y-m-d H:i:s'),
+            'tanggal_buat' => $currentDateTime->format('Y-m-d H:i:s'), // Format dengan timezone yang benar
             'petugas_id' => $this->request->getPost('petugas_id'),
             'nama_petugas_ticket' => $this->request->getPost('nama_petugas_ticket'),
             'no_hp_petugas_ticket' => $this->request->getPost('no_hp_petugas_ticket'),
