@@ -34,10 +34,7 @@
                 <div>
                     <label for="tanggal_buat" class="block text-gray-700 text-sm font-bold mb-2">Tanggal Buat:</label>
                     <input type="datetime-local" name="tanggal_buat" id="tanggal_buat" readonly
-                        value="<?php
-                                $datetime = new DateTime($ticket['tanggal_buat'], new DateTimeZone('Asia/Jakarta'));
-                                echo old('tanggal_buat', $datetime->format('Y-m-d\TH:i'));
-                                ?>"
+                        value="<?= old('tanggal_buat', date('Y-m-d\TH:i', strtotime($ticket['tanggal_buat']))) ?>"
                         class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent bg-gray-100 cursor-not-allowed">
                 </div>
             </div>
