@@ -109,7 +109,7 @@ class TicketController extends BaseController
             'deskripsi' => $this->request->getPost('deskripsi'),
             'status' => $this->request->getPost('status'),
             'prioritas' => $this->request->getPost('prioritas'),
-            'tanggal_buat' => $currentDateTime->format('Y-m-d H:i:s'), // Format dengan timezone yang benar
+            'tanggal_buat' => $currentDateTime->format('Y-m-d H:i'), // Format dengan timezone yang benar
             'petugas_id' => $this->request->getPost('petugas_id'),
             'nama_petugas_ticket' => $this->request->getPost('nama_petugas_ticket'),
             'no_hp_petugas_ticket' => $this->request->getPost('no_hp_petugas_ticket'),
