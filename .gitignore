@@ -12,17 +12,17 @@ writable/debugbar/
 .env.*  
 
 # Abaikan semua konfigurasi lokal CodeIgniter
-/app/Config/App.php
-/app/Config/Database.php
-/app/Config/Email.php
-/app/Config/Encryption.php
-/app/Config/Paths.php
-/app/Config/Routing.php
-/app/Config/Services.php
-/app/Config/Autoload.php
-/app/Config/Constants.php
-/app/Config/Modules.php
-/app/Config/Validation.php
+# /app/Config/App.php
+# /app/Config/Database.php
+# /app/Config/Email.php
+# /app/Config/Encryption.php
+# /app/Config/Paths.php
+# /app/Config/Routing.php
+# /app/Config/Services.php
+# /app/Config/Autoload.php
+# /app/Config/Constants.php
+# /app/Config/Modules.php
+# /app/Config/Validation.php
 
 # Abaikan semua index.php kecuali di root
 **/index.php
