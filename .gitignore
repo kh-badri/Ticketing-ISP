@@ -59,3 +59,5 @@ nbproject/
 
 # Log file jika tidak disimpan di writable/logs
 *.log
+writable/session/
+writable/session/
