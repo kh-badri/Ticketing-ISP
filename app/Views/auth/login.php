@@ -32,7 +32,7 @@
                     <div class="flex items-center justify-start mb-8">
                         <img src="<?= base_url('public/inmeet-logo.png') ?>" alt="Logo ISP" class="h-14 w-auto mb-2">
                         <div>
-                            <h1 class="md:text-2xl sm:text-xl font-bold text-amber-600 text-shadow">App Ticketing ISP</h1>
+                            <h1 class="md:text-2xl sm:text-xl font-bold text-amber-600 text-shadow">App Ticketing ISP. </h1>
 
                         </div>
                     </div>
@@ -51,7 +51,7 @@
                             <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
                             <div class="mt-1">
                                 <input id="password" name="password" type="password" required
-                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition duration-150 ease-in-out"
+                                    class="w-full px-4 py-3 border border-gray-100 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition duration-150 ease-in-out"
                                     placeholder="••••••••">
                             </div>
                         </div>
