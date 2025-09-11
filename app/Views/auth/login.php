@@ -32,7 +32,7 @@
                     <div class="flex items-center justify-start mb-8">
                         <img src="<?= base_url('public/inmeet-logo.png') ?>" alt="Logo ISP" class="h-14 w-auto mb-2">
                         <div>
-                            <h1 class="text-2xl font-bold text-amber-600 text-shadow">Ticketing App</h1>
+                            <h1 class="md:text-2xl sm:text-xl font-bold text-amber-600 text-shadow">Ticketing App ISP</h1>
 
                         </div>
                     </div>
