@@ -3,29 +3,44 @@
 # ===============================
 /vendor/
 writable/cache/
+writable/logs/
+writable/session/
+writable/debugbar/
 
-# Abaikan semua .env termasuk testing, tapi izinkan .env utama (jika perlu dilacak)
-!.env
-.env.testing
+# Abaikan semua .env (jangan pernah commit .env ke repo)
+.env
+.env.*  
 
-# Abaikan semua .htaccess kecuali yang di root
-**/.htaccess
-!/.htaccess
+# Abaikan semua konfigurasi lokal CodeIgniter
+/app/Config/App.php
+/app/Config/Database.php
+/app/Config/Email.php
+/app/Config/Encryption.php
+/app/Config/Paths.php
+/app/Config/Routing.php
+/app/Config/Services.php
+/app/Config/Autoload.php
+/app/Config/Constants.php
+/app/Config/Modules.php
+/app/Config/Validation.php
 
 # Abaikan semua index.php kecuali di root
 **/index.php
 !/index.php
 
+# Abaikan semua .htaccess kecuali di root
+**/.htaccess
+!/.htaccess
+
 # Composer & npm
 composer.lock
+package-lock.json
 npm-debug.log
-.idea/
-.vscode/
 
-# Node modules (untuk Tailwind CSS)
+# Node modules (misalnya untuk Tailwind atau build JS)
 node_modules/
-public/css/tailwind.css.map
-public/build/  # Jika ada proses build custom
+public/build/
+public/css/*.map
 
 # Common OS/editor files
 .DS_Store
@@ -38,26 +53,11 @@ ehthumbs.db
 *.sublime-project
 *.sublime-workspace
 .directory
+.idea/
+.vscode/
 
 # Testing and CI
-.c9/
-.php_cs.cache
 /build/
 nbproject/
-
-# Konfigurasi lokal CodeIgniter (berisi info sensitif)
-/app/Config/Autoload.php
-/app/Config/Constants.php
-/app/Config/Database.php
-/app/Config/Encryption.php
-/app/Config/Modules.php
-/app/Config/Paths.php
-/app/Config/Routing.php
-/app/Config/Services.php
-/app/Config/Validation.php
-/app/Config/App.php  # Ditambahkan App.php seperti permintaan
-
-# Log file jika tidak disimpan di writable/logs
-*.log
-writable/session/
-writable/session/
+.c9/
+.php_cs.cache
