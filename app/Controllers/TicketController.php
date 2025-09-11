@@ -26,7 +26,7 @@ class TicketController extends BaseController
         $this->customerModel = new CustomerModel();
         $this->petugasModel = new PetugasModel();
         helper(['url', 'form', 'text']);
-
+        
         // Set timezone ke Asia/Jakarta untuk memastikan konsistensi waktu
         date_default_timezone_set('Asia/Jakarta');
     }
@@ -39,13 +39,14 @@ class TicketController extends BaseController
     {
         $search = $this->request->getGet('search');
         $statusFilter = $this->request->getGet('status_filter');
+        $perPage = 10; // Jumlah data per halaman
 
         // Memulai query builder
-        $builder = $this->ticketModel;
+        $query = $this->ticketModel;
 
         // Menerapkan kondisi pencarian jika ada
         if ($search) {
-            $builder = $builder->like('code_ticket', $search)
+            $query = $query->like('code_ticket', $search)
                 ->orLike('nama_customer_ticket', $search)
                 ->orLike('keluhan', $search)
                 ->orLike('nama_petugas_ticket', $search);
@@ -53,14 +54,16 @@ class TicketController extends BaseController
 
         // Menerapkan kondisi filter status jika ada dan bukan 'all'
         if ($statusFilter && $statusFilter !== 'all') {
-            $builder = $builder->where('status', $statusFilter);
+            $query = $query->where('status', $statusFilter);
         }
 
-        $tickets = $builder->findAll();
+        // Mengambil data dengan pagination
+        $tickets = $query->paginate($perPage);
 
         $data = [
             'title' => 'Daftar Tiket',
             'tickets' => $tickets,
+            'pager' => $this->ticketModel->pager, // Mengirimkan objek pager ke view
             'active_menu' => 'tickets',
             'search_query' => $search,
             'status_filter_selected' => $statusFilter,
@@ -98,7 +101,7 @@ class TicketController extends BaseController
     {
         // Buat objek DateTime dengan timezone Asia/Jakarta
         $currentDateTime = new \DateTime('now', new \DateTimeZone('Asia/Jakarta'));
-
+        
         $dataToSave = [
             'code_ticket' => $this->request->getPost('code_ticket'),
             'customer_id' => $this->request->getPost('customer_id') ?: null,
@@ -161,7 +164,7 @@ class TicketController extends BaseController
                 . "Tim Layanan Pelanggan \n*Indomedia Solusi Net*";
 
             $agentMessage = "🔔 *Pemberitahuan: Tiket Layanan Baru Telah Diterbitkan*\n"
-                . "Yth. Bapak/Ibu *" . $dataToSave['nama_petugas_ticket'] . "*,\n\n"
+                . "Halo : *" . $dataToSave['nama_petugas_ticket'] . "*,\n\n"
                 . "Anda telah ditugaskan untuk menangani tiket layanan baru dengan informasi sebagai berikut:\n"
                 . "• Kode Tiket: *" . $dataToSave['code_ticket'] . "*\n"
                 . "• Pelanggan: *" . $dataToSave['nama_customer_ticket'] . "* (No. HP: _" . $dataToSave['no_hp_customer_ticket'] . "_)\n"
@@ -286,7 +289,7 @@ class TicketController extends BaseController
                         . "Tim Layanan Pelanggan \n*Indomedia Solusi Net*";
 
                     $agentUpdateMessage = "📝 *Pembaruan Status Tiket: Menjadi 'Open'*\n"
-                        . "Yth. Bapak/Ibu *" . $dataToUpdate['nama_petugas_ticket'] . "*,\n\n"
+                        . "Halo : *" . $dataToUpdate['nama_petugas_ticket'] . "*,\n\n"
                         . "Status tiket dengan Kode Tiket *" . $dataToUpdate['code_ticket'] . "* telah diperbarui menjadi *'Open'*.\n"
                         . "• Pelanggan: *" . $dataToUpdate['nama_customer_ticket'] . "*\n"
                         . "• Kategori: _" . $dataToUpdate['keluhan'] . "_\n"
@@ -303,13 +306,13 @@ class TicketController extends BaseController
                         . "Tim kami sedang bekerja untuk menyelesaikannya. Terima kasih atas kepercayaan Anda. Kami akan segera memberikan pembaruan setelah penanganan selesai.";
 
                     $agentUpdateMessage = "🔄 *Pembaruan Status Tiket: Menjadi 'Diproses'*\n"
-                        . "Yth. Bapak/Ibu *" . $dataToUpdate['nama_petugas_ticket'] . "*,\n\n"
+                        . "Halo : *" . $dataToUpdate['nama_petugas_ticket'] . "*,\n\n"
                         . "Status tiket dengan Kode Tiket *" . $dataToUpdate['code_ticket'] . "* telah diperbarui menjadi *'Diproses'*.\n"
                         . "• Pelanggan: *" . $dataToUpdate['nama_customer_ticket'] . "*\n"
                         . "• Kategori: _" . $dataToUpdate['keluhan'] . "_\n"
                         . "• Status Terbaru: *" . $dataToUpdate['status'] . "*\n"
                         . "• Prioritas: *" . $dataToUpdate['prioritas'] . "*\n\n"
-                        . "Pastikan Anda terus memantau dan memperbarui progres penanganan hingga tiket ini dapat diselesaikan. Terima kasih.";
+                        . "Mohon segera lakukan peninjauan dan tindak lanjut. Terima kasih.";
                 } elseif (($newStatus === 'closed' || $newStatus === 'selesai') && $oldStatus !== 'closed' && $oldStatus !== 'selesai') {
                     $customerUpdateMessage = "✅ *Tiket Layanan Anda Telah Selesai Ditangani*\n"
                         . "Yth. Bapak/Ibu *" . $dataToUpdate['nama_customer_ticket'] . "*,\n\n"
@@ -321,7 +324,7 @@ class TicketController extends BaseController
                         . "Tim Layanan Pelanggan \n*Indomedia Solusi Net*";
 
                     $agentUpdateMessage = "🎉 *Pemberitahuan: Tiket Layanan Telah Ditutup*\n"
-                        . "Yth. Bapak/Ibu *" . $dataToUpdate['nama_petugas_ticket'] . "*,\n\n"
+                        . "Halo : *" . $dataToUpdate['nama_petugas_ticket'] . "*,\n\n"
                         . "Tiket dengan Kode Tiket *" . $dataToUpdate['code_ticket'] . "* yang Anda tangani telah *berhasil ditutup*.\n"
                         . "• Pelanggan: *" . $dataToUpdate['nama_customer_ticket'] . "*\n"
                         . "• Kategori: _" . $dataToUpdate['keluhan'] . "_\n"
@@ -329,7 +332,7 @@ class TicketController extends BaseController
                         . "Terima kasih atas kerja keras dan kontribusi Anda dalam menyelesaikan tiket ini. Silakan lanjutkan dengan tugas berikutnya.";
                 } else {
                     $customerUpdateMessage = "📢 *Pembaruan Tiket Anda*\n"
-                        . "Halo *" . $dataToUpdate['nama_customer_ticket'] . "*,\n\n"
+                        . "Yth. Bapak/Ibu *" . $dataToUpdate['nama_customer_ticket'] . "*,\n\n"
                         . "Berikut pembaruan status tiket Anda dengan kode *" . $dataToUpdate['code_ticket'] . "*:\n"
                         . "• Status: *" . $dataToUpdate['status'] . "*\n"
                         . "• Prioritas: *" . $dataToUpdate['prioritas'] . "*\n\n"

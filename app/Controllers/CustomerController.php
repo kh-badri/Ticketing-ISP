@@ -15,14 +15,18 @@ class CustomerController extends BaseController
         helper('url'); // Memuat URL helper
     }
 
-    // Menampilkan daftar customer
+    // Menampilkan daftar customer dengan pagination
     public function index()
     {
+        $perPage = 10; // Menentukan jumlah data per halaman
+        
         $data = [
-            'title'     => 'Data Customer',
-            'customers' => $this->customerModel->findAll(),
-            'active_menu' => 'customer', // Tambahkan ini
+            'title'      => 'Data Customer',
+            'customers'  => $this->customerModel->paginate($perPage), // Mengambil 10 customer per halaman
+            'pager'      => $this->customerModel->pager, // Mengirimkan objek pager ke view
+            'active_menu' => 'customer',
         ];
+        
         return view('customer/index', $data);
     }
 
@@ -80,30 +84,23 @@ class CustomerController extends BaseController
     {
         $oldCustomer = $this->customerModel->find($id);
 
-        if (!$oldCustomer) { // Pastikan data customer yang akan diedit memang ada
+        if (!$oldCustomer) {
             throw new \CodeIgniter\Exceptions\PageNotFoundException('Data customer yang akan diperbarui tidak ditemukan.');
         }
 
-        // Ambil rules validasi dari model
         $rules = $this->customerModel->validationRules;
+        $rules['id_customer'] = 'required|max_length[50]';
 
-        // --- PERUBAHAN DI SINI: id_customer tidak perlu lagi dicek is_unique sama sekali ---
-        // Cukup pastikan required dan max_length sesuai definisi di model
-        $rules['id_customer'] = 'required|max_length[50]'; // Ini sudah sesuai dengan model yang baru
-
-        // Jika Email yang diinput sama dengan Email lama, abaikan aturan 'is_unique'
         if ($this->request->getPost('email') === $oldCustomer['email']) {
             $rules['email'] = 'permit_empty|valid_email';
         } else {
             $rules['email'] = 'permit_empty|valid_email|is_unique[customer.email]';
         }
 
-        // Jalankan validasi
         if (!$this->validate($rules, $this->customerModel->validationMessages)) {
             return redirect()->back()->withInput();
         }
 
-        // Siapkan data untuk update
         $data = [
             'id_customer'   => $this->request->getPost('id_customer'),
             'nama_customer' => $this->request->getPost('nama_customer'),
@@ -112,15 +109,11 @@ class CustomerController extends BaseController
             'email'         => $this->request->getPost('email'),
         ];
 
-        // Lakukan update data di database
         $updateResult = $this->customerModel->update($id, $data);
 
-        // Tambahkan kondisi untuk flashdata berdasarkan hasil update
         if ($updateResult) {
             session()->setFlashdata('success', 'Data customer berhasil diperbarui.');
         } else {
-            // Ini akan muncul jika update tidak menyebabkan perubahan (misal data sama persis)
-            // atau jika ada error lain di level model/database yang tidak tertangkap validasi
             session()->setFlashdata('error', 'Gagal memperbarui data customer atau tidak ada perubahan yang terdeteksi.');
         }
 

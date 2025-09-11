@@ -2,6 +2,87 @@
 
 <?= $this->section('content') ?>
 
+<style>
+/* CSS kustom untuk Select2 */
+.select2-container .select2-selection--single {
+    height: 48px !important;
+    display: flex !important;
+    align-items: center !important;
+    border: 1px solid #D1D5DB;
+    border-radius: 0.5rem;
+    width: 100% !important; /* Memastikan lebar 100% di semua ukuran layar */
+}
+
+/* Mengatur fokus */
+.select2-container--default.select2-container--focus .select2-selection--single {
+    border-color: #FBBF24;
+    box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.5);
+}
+
+/* Mengatur tampilan teks di dalam Select2 */
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 46px;
+    padding: 0 16px; /* Menggunakan padding konsisten */
+    color: #4B5563;
+}
+
+/* Mengatur tampilan panah dropdown */
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 46px;
+    width: 20px;
+    right: 8px;
+}
+
+/* Mengatur tampilan input pencarian di dropdown */
+.select2-container--default .select2-search--dropdown .select2-search__field {
+    border-radius: 0.5rem !important;
+    border: 1px solid #D1D5DB !important;
+    padding: 0.5rem 1rem !important;
+    font-size: 0.875rem;
+}
+
+/* Mengatur menu dropdown */
+.select2-dropdown {
+    border-color: #D1D5DB;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Mengatur opsi di dalam dropdown */
+.select2-results__option {
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+}
+
+/* Mengatur hover pada opsi */
+.select2-results__option--highlighted {
+    background-color: #FEF3C7 !important;
+    color: #92400E !important;
+}
+
+/* Styling responsif untuk tombol "x" */
+@media (max-width: 767px) {
+    .select2-container--default .select2-selection--single .select2-selection__clear {
+        right: 48px; /* Atur posisi agar tidak menabrak panah di layar kecil */
+    }
+}
+
+/* Tampilan desktop */
+@media (min-width: 768px) {
+    .select2-container--default .select2-selection--single .select2-selection__clear {
+        right: 32px;
+        color: #F59E0B;
+        font-size: 1.25rem;
+        position: absolute;
+        line-height: 46px;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__clear:hover {
+        color: #D97706;
+    }
+}
+</style>
+
 <div class="container mx-auto px-4 py-8 sm:px-6 lg:px-8">
     <div class="bg-white shadow-xl rounded-xl p-6 md:p-8 lg:p-10">
         <h2 class="text-3xl font-extrabold text-amber-600 tracking-tight mb-8 text-center">
@@ -17,7 +98,7 @@
                     <input type="text" name="code_ticket" id="code_ticket"
                         value="<?= old('code_ticket', $code_ticket_generated) ?>"
                         class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent
-                                <?= $validation->hasError('code_ticket') ? 'border-red-500' : '' ?>"
+                        <?= $validation->hasError('code_ticket') ? 'border-red-500' : '' ?>"
                         required readonly>
                     <?php if ($validation->hasError('code_ticket')): ?>
                         <p class="text-red-500 text-xs italic mt-1"><?= $validation->getError('code_ticket') ?></p>
@@ -28,7 +109,7 @@
                     <input type="datetime-local" name="tanggal_buat" id="tanggal_buat"
                         value="<?= old('tanggal_buat') ?>"
                         class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent
-                                <?= $validation->hasError('tanggal_buat') ? 'border-red-500' : '' ?>"
+                        <?= $validation->hasError('tanggal_buat') ? 'border-red-500' : '' ?>"
                         required readonly>
                     <?php if ($validation->hasError('tanggal_buat')): ?>
                         <p class="text-red-500 text-xs italic mt-1"><?= $validation->getError('tanggal_buat') ?></p>
@@ -54,7 +135,7 @@
                     <select name="customer_id" id="customer_id"
                         class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-800 leading-tight focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent
                         <?= $validation->hasError('customer_id') ? 'border-red-500' : '' ?>">
-                        <option value="">-- Pilih Customer --</option>
+                        <option value="">-- Cari atau Pilih Customer --</option>
                         <?php foreach ($customers as $customer): ?>
                             <option value="<?= $customer['id'] ?>"
                                 <?= old('customer_id') == $customer['id'] ? 'selected' : '' ?>>
@@ -112,15 +193,16 @@
                 <label for="keluhan" class="block text-gray-700 text-sm font-bold mb-2">Kategori Tiket:</label>
                 <select name="keluhan" id="keluhan"
                     class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent
-                            <?= $validation->hasError('keluhan') ? 'border-red-500' : '' ?>" required>
+                                <?= $validation->hasError('keluhan') ? 'border-red-500' : '' ?>" required>
                     <option value="">-- Pilih Kategori --</option>
                     <?php
                     $kategori_options = [
                         'Pemasangan Pelanggan Baru',
                         'Penarikan Kabel',
-                        'Pemasangan Perangkat',
-                        'Pergantian Perangkat',
                         'Penambahan Perangkat',
+                        'Pergantian Perangkat',
+                        'Pengecekan Perangkat',
+                        'Pengambilan Perangkat',
                         'Perbaikan Koneksi',
                         'Pengecekan Koneksi'
                     ];
@@ -140,7 +222,7 @@
                 <label for="deskripsi" class="block text-gray-700 text-sm font-bold mb-2">Deskripsi Detail (Opsional):</label>
                 <textarea name="deskripsi" id="deskripsi" rows="4"
                     class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent
-                            <?= $validation->hasError('deskripsi') ? 'border-red-500' : '' ?>"
+                                <?= $validation->hasError('deskripsi') ? 'border-red-500' : '' ?>"
                     placeholder="Jelaskan masalah secara lebih detail"><?= old('deskripsi') ?></textarea>
                 <?php if ($validation->hasError('deskripsi')): ?>
                     <p class="text-red-500 text-xs italic mt-1"><?= $validation->getError('deskripsi') ?></p>
@@ -184,8 +266,8 @@
                 <label for="petugas_id" class="block text-gray-700 text-sm font-bold mb-2">Pilih Petugas:</label>
                 <select name="petugas_id" id="petugas_id"
                     class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent
-                            <?= $validation->hasError('petugas_id') ? 'border-red-500' : '' ?>" required>
-                    <option value="">-- Pilih Petugas --</option>
+                                <?= $validation->hasError('petugas_id') ? 'border-red-500' : '' ?>" required>
+                    <option value="">-- Cari atau Pilih Petugas --</option>
                     <?php foreach ($petugas as $p): ?>
                         <option value="<?= $p['id_petugas'] ?>"
                             <?= old('petugas_id') == $p['id_petugas'] ? 'selected' : '' ?>>
@@ -204,7 +286,7 @@
                     <input type="text" name="nama_petugas_ticket" id="nama_petugas_ticket"
                         value="<?= old('nama_petugas_ticket') ?>"
                         class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 bg-gray-100 leading-tight focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent
-                                <?= $validation->hasError('nama_petugas_ticket') ? 'border-red-500' : '' ?>"
+                        <?= $validation->hasError('nama_petugas_ticket') ? 'border-red-500' : '' ?>"
                         required placeholder="Nama petugas" readonly>
                     <?php if ($validation->hasError('nama_petugas_ticket')): ?>
                         <p class="text-red-500 text-xs italic mt-1"><?= $validation->getError('nama_petugas_ticket') ?></p>
@@ -215,7 +297,7 @@
                     <input type="text" name="no_hp_petugas_ticket" id="no_hp_petugas_ticket"
                         value="<?= old('no_hp_petugas_ticket') ?>"
                         class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 bg-gray-100 leading-tight focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent
-                                <?= $validation->hasError('no_hp_petugas_ticket') ? 'border-red-500' : '' ?>"
+                        <?= $validation->hasError('no_hp_petugas_ticket') ? 'border-red-500' : '' ?>"
                         required placeholder="Nomor HP petugas" readonly>
                     <?php if ($validation->hasError('no_hp_petugas_ticket')): ?>
                         <p class="text-red-500 text-xs italic mt-1"><?= $validation->getError('no_hp_petugas_ticket') ?></p>
@@ -227,7 +309,7 @@
                 <input type="text" name="role_petugas_ticket" id="role_petugas_ticket"
                     value="<?= old('role_petugas_ticket') ?>"
                     class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 bg-gray-100 leading-tight focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent
-                            <?= $validation->hasError('role_petugas_ticket') ? 'border-red-500' : '' ?>"
+                    <?= $validation->hasError('role_petugas_ticket') ? 'border-red-500' : '' ?>"
                     required placeholder="Role petugas" readonly>
                 <?php if ($validation->hasError('role_petugas_ticket')): ?>
                     <p class="text-red-500 text-xs italic mt-1"><?= $validation->getError('role_petugas_ticket') ?></p>
@@ -246,151 +328,107 @@
     </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    $(document).ready(function() {
         // Set current date and time for tanggal_buat input
-        function setCurrentDateTime() {
-            const now = new Date();
-            now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-            const formattedDate = now.toISOString().slice(0, 16);
-            document.getElementById('tanggal_buat').value = formattedDate;
+        const now = new Date();
+        now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+        const formattedDate = now.toISOString().slice(0, 16);
+        $('#tanggal_buat').val(formattedDate);
+
+        // --- Inisialisasi Select2 ---
+        const customerSelect2 = $('#customer_id').select2({
+            placeholder: "-- Cari atau Pilih Customer --",
+            allowClear: false
+        });
+
+        $('#petugas_id').select2({
+            placeholder: "-- Cari atau Pilih Petugas --",
+            allowClear: false,
+        });
+
+        // --- Logika Tombol Opsi Customer ---
+        const customerInputs = $('#nama_customer_ticket, #no_hp_customer_ticket, #alamat_customer_ticket');
+
+        function setPilihMode() {
+            // Sembunyikan input manual dan tampilkan Select2
+            customerSelect2.next('.select2-container').show();
+            customerInputs.prop('readonly', true).addClass('bg-gray-100');
+            $('#customer_id').prop('required', true);
+
+            // Styling tombol
+            $('#btnPilihCustomer').removeClass('bg-gray-200 text-gray-700').addClass('bg-amber-600 text-white');
+            $('#btnCustomCustomer').removeClass('bg-amber-600 text-white').addClass('bg-gray-200 text-gray-700');
         }
 
-        // Call the function on page load
-        setCurrentDateTime();
-
-        // === Bagian Opsi Customer ===
-        const btnPilihCustomer = document.getElementById('btnPilihCustomer');
-        const btnCustomCustomer = document.getElementById('btnCustomCustomer');
-        const pilihCustomerContainer = document.getElementById('pilihCustomerContainer');
-
-        const customerIdSelect = document.getElementById('customer_id');
-        const namaCustomerInput = document.getElementById('nama_customer_ticket');
-        const alamatCustomerInput = document.getElementById('alamat_customer_ticket');
-        const noHpCustomerInput = document.getElementById('no_hp_customer_ticket');
-
-        // Fungsi untuk mengosongkan input customer
-        const clearCustomerFields = () => {
-            customerIdSelect.value = '';
-            namaCustomerInput.value = '';
-            alamatCustomerInput.value = '';
-            noHpCustomerInput.value = '';
-        };
-
-        // Fungsi untuk mengatur tampilan mode "Pilih Customer"
-        const setPilihMode = () => {
-            pilihCustomerContainer.style.display = 'block';
-            namaCustomerInput.readOnly = true;
-            namaCustomerInput.classList.add('bg-gray-100');
-            alamatCustomerInput.readOnly = true;
-            alamatCustomerInput.classList.add('bg-gray-100');
-            noHpCustomerInput.readOnly = true;
-            noHpCustomerInput.classList.add('bg-gray-100');
-            customerIdSelect.setAttribute('required', 'required');
+        function setCustomMode() {
+            // Sembunyikan Select2 dan tampilkan input manual
+            customerSelect2.val(null).trigger('change');
+            customerSelect2.next('.select2-container').hide();
+            customerInputs.prop('readonly', false).removeClass('bg-gray-100').val('');
+            $('#customer_id').prop('required', false);
 
             // Styling tombol
-            btnPilihCustomer.classList.remove('bg-gray-200', 'text-gray-700');
-            btnPilihCustomer.classList.add('bg-amber-600', 'text-white');
-            btnCustomCustomer.classList.remove('bg-amber-600', 'text-white');
-            btnCustomCustomer.classList.add('bg-gray-200', 'text-gray-700');
+            $('#btnCustomCustomer').removeClass('bg-gray-200 text-gray-700').addClass('bg-amber-600 text-white');
+            $('#btnPilihCustomer').removeClass('bg-amber-600 text-white').addClass('bg-gray-200 text-gray-700');
+        }
 
-            if (customerIdSelect.value) {
-                customerIdSelect.dispatchEvent(new Event('change'));
-            } else {
-                namaCustomerInput.value = '';
-                alamatCustomerInput.value = '';
-                noHpCustomerInput.value = '';
-            }
-        };
+        $('#btnPilihCustomer').on('click', setPilihMode);
+        $('#btnCustomCustomer').on('click', setCustomMode);
 
-        // Fungsi untuk mengatur tampilan mode "Custom Input"
-        const setCustomMode = () => {
-            clearCustomerFields();
-            pilihCustomerContainer.style.display = 'none';
-            namaCustomerInput.readOnly = false;
-            namaCustomerInput.classList.remove('bg-gray-100');
-            alamatCustomerInput.readOnly = false;
-            alamatCustomerInput.classList.remove('bg-gray-100');
-            noHpCustomerInput.readOnly = false;
-            noHpCustomerInput.classList.remove('bg-gray-100');
-            customerIdSelect.removeAttribute('required');
-
-            // Styling tombol
-            btnCustomCustomer.classList.remove('bg-gray-200', 'text-gray-700');
-            btnCustomCustomer.classList.add('bg-amber-600', 'text-white');
-            btnPilihCustomer.classList.remove('bg-amber-600', 'text-white');
-            btnPilihCustomer.classList.add('bg-gray-200', 'text-gray-700');
-        };
-
-        btnPilihCustomer.addEventListener('click', setPilihMode);
-        btnCustomCustomer.addEventListener('click', setCustomMode);
-
-        // === Bagian Detail Customer dari Select ===
-        customerIdSelect.addEventListener('change', function() {
-            const customerId = this.value;
+        // --- Mengisi data customer dari Select2 ---
+        customerSelect2.on('change', function() {
+            const customerId = $(this).val();
             if (customerId) {
                 fetch(`<?= base_url('tickets/getcustomerdetails/') ?>${customerId}`)
-                    .then(response => {
-                        if (!response.ok) throw new Error('Customer not found');
-                        return response.json();
-                    })
+                    .then(response => response.json())
                     .then(data => {
-                        namaCustomerInput.value = data.nama_customer || '';
-                        alamatCustomerInput.value = data.alamat || '';
-                        noHpCustomerInput.value = data.no_hp || '';
+                        $('#nama_customer_ticket').val(data.nama_customer || '');
+                        $('#alamat_customer_ticket').val(data.alamat || '');
+                        $('#no_hp_customer_ticket').val(data.no_hp || '');
                     })
-                    .catch(error => {
-                        console.error('Error fetching customer details:', error);
-                        clearCustomerFields();
-                    });
+                    .catch(error => console.error('Error fetching customer details:', error));
             } else {
-                namaCustomerInput.value = '';
-                alamatCustomerInput.value = '';
-                noHpCustomerInput.value = '';
+                customerInputs.val('');
             }
         });
 
-        // === Bagian Detail Petugas ===
-        const petugasIdSelect = document.getElementById('petugas_id');
-        const namaPetugasInput = document.getElementById('nama_petugas_ticket');
-        const noHpPetugasInput = document.getElementById('no_hp_petugas_ticket');
-        const rolePetugasInput = document.getElementById('role_petugas_ticket');
-
-        petugasIdSelect.addEventListener('change', function() {
-            const petugasId = this.value;
+        // --- Mengisi data petugas dari Select2 ---
+        $('#petugas_id').on('change', function() {
+            const petugasId = $(this).val();
             if (petugasId) {
                 fetch(`<?= base_url('tickets/getpetugasdetails/') ?>${petugasId}`)
-                    .then(response => {
-                        if (!response.ok) throw new Error('Petugas not found');
-                        return response.json();
-                    })
+                    .then(response => response.json())
                     .then(data => {
-                        namaPetugasInput.value = data.nama_petugas || '';
-                        noHpPetugasInput.value = data.no_hp || '';
-                        rolePetugasInput.value = data.role || '';
+                        $('#nama_petugas_ticket').val(data.nama_petugas || '');
+                        $('#no_hp_petugas_ticket').val(data.no_hp || '');
+                        $('#role_petugas_ticket').val(data.role || '');
                     })
-                    .catch(error => {
-                        console.error('Error fetching petugas details:', error);
-                        namaPetugasInput.value = '';
-                        noHpPetugasInput.value = '';
-                        rolePetugasInput.value = '';
-                    });
+                    .catch(error => console.error('Error fetching petugas details:', error));
             } else {
-                namaPetugasInput.value = '';
-                noHpPetugasInput.value = '';
-                rolePetugasInput.value = '';
+                $('#nama_petugas_ticket, #no_hp_petugas_ticket, #role_petugas_ticket').val('');
             }
         });
 
-        // === Inisialisasi & Memuat ulang data jika ada old input ===
+        // --- Logika inisialisasi awal saat halaman dimuat ---
+        // Cek apakah ada old input untuk "Custom Input"
         <?php if (old('nama_customer_ticket') && !old('customer_id')): ?>
             setCustomMode();
         <?php else: ?>
             setPilihMode();
+            if ('<?= old('customer_id') ?>') {
+                customerSelect2.val('<?= old('customer_id') ?>').trigger('change');
+            }
         <?php endif; ?>
 
+        // Muat data petugas jika ada old input
         <?php if (old('petugas_id')): ?>
-            petugasIdSelect.dispatchEvent(new Event('change'));
+            $('#petugas_id').val('<?= old('petugas_id') ?>').trigger('change');
         <?php endif; ?>
     });
 </script>

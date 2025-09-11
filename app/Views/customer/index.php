@@ -1,4 +1,5 @@
-<?= $this->extend('layout/layout') ?> <?= $this->section('content') ?>
+<?= $this->extend('layout/layout') ?>
+<?= $this->section('content') ?>
 
 <div class="container mx-auto px-4 py-8 sm:px-6 lg:px-8">
     <div class="bg-white shadow-xl rounded-xl p-6 md:p-8 lg:p-10">
@@ -47,7 +48,7 @@
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
-                        <?php $no = 1; ?>
+                        <?php $no = (isset($pager) && !empty($pager)) ? ($pager->getCurrentPage() - 1) * $pager->getPerPage() + 1 : 1; ?>
                         <?php foreach ($customers as $customer): ?>
                             <tr>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?= $no++ ?>.</td>
@@ -80,12 +81,12 @@
             </div>
 
             <div class="md:hidden space-y-4">
-                <?php $no = 1; ?>
+                <?php $no_mobile = (isset($pager) && !empty($pager)) ? ($pager->getCurrentPage() - 1) * $pager->getPerPage() + 1 : 1; ?>
                 <?php foreach ($customers as $customer): ?>
                     <div class="bg-white shadow-md rounded-lg p-4 border border-gray-200">
                         <div class="flex items-center justify-between mb-2">
                             <div class="text-sm font-semibold text-amber-700">ID: <?= esc($customer['id_customer']) ?></div>
-                            <div class="text-xs text-gray-500">No. <?= $no++ ?></div>
+                            <div class="text-xs text-gray-500">No. <?= $no_mobile++ ?></div>
                         </div>
                         <div class="text-lg font-bold text-gray-900 mb-2"><?= esc($customer['nama_customer']) ?></div>
                         <p class="text-sm text-gray-700 mb-1">
@@ -97,7 +98,6 @@
                         <p class="text-sm text-gray-700 mb-4">
                             <span class="font-medium">Alamat:</span> <?= esc($customer['alamat']) ?: '-' ?>
                         </p>
-
                         <div class="flex justify-end space-x-2">
                             <a href="<?= base_url('customer/edit/' . $customer['id']) ?>" class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md shadow-sm text-amber-700 bg-amber-100 hover:bg-amber-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
@@ -118,6 +118,12 @@
                         </div>
                     </div>
                 <?php endforeach; ?>
+            </div>
+
+            <div class="mt-4 flex justify-end">
+                <?php if (isset($pager) && !empty($pager)): ?>
+                    <?= $pager->links('default', 'pagination_tailwind') ?>
+                <?php endif; ?>
             </div>
         <?php endif; ?>
     </div>

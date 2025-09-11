@@ -2,19 +2,31 @@
 
 <?= $this->section('content') ?>
 
-<div class="container mx-auto px-2 py-2 sm:px-2 lg:px-2">
-    <div class="bg-white shadow-xl rounded-xl p-4 md:p-4 lg:p-4">
 
-        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-8 gap-4">
+<div class="container mx-auto px-2 py-2 sm:px-6 lg:px-8">
+    <div class="bg-white shadow-xl rounded-xl p-4 md:p-6 lg:p-8">
+
+        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 md:mb-8 gap-4">
             <h2 class="text-3xl font-extrabold text-amber-600 tracking-tight">
                 <?= $title ?>
             </h2>
-            <a href="<?= base_url('tickets/create') ?>" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-lg shadow-sm text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 transition duration-300 ease-in-out transform hover:scale-105">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
-                </svg>
-                Buat Tiket Baru
-            </a>
+            <div class="flex flex-col sm:flex-row gap-2">
+                <button type="button" onclick="showScheduleExportModal()" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-lg shadow-sm text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 transition duration-300 ease-in-out transform hover:scale-105">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    Export Jadwal
+                </button>
+                <a href="<?= base_url('tickets/create') ?>" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-lg shadow-sm text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 transition duration-300 ease-in-out transform hover:scale-105">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
+                    </svg>
+                    Buat Tiket Baru
+                </a>
+            </div>
         </div>
 
         <form id="filterSearchForm" action="<?= base_url('tickets') ?>" method="get" class="mb-6 flex flex-col sm:flex-row gap-4 items-center">
@@ -22,11 +34,11 @@
                 <label for="search" class="sr-only">Cari Tiket</label>
                 <input type="text" name="search" id="search" placeholder="Cari Kode, Customer, Keluhan..."
                     value="<?= esc($search_query ?? '') ?>"
-                    class="shadow-sm focus:ring-amber-500 focus:border-amber-500 block w-full sm:text-sm border-gray-300 rounded-md py-2 px-3">
+                    class="shadow-sm focus:ring-amber-500 focus:border-amber-500 block w-full border-gray-300 rounded-md py-2 px-3">
             </div>
             <div class="w-full sm:w-auto">
                 <label for="status_filter" class="sr-only">Filter Status</label>
-                <select id="status_filter" name="status_filter" class="block w-full sm:w-48 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500 sm:text-sm">
+                <select id="status_filter" name="status_filter" class="block w-full sm:w-48 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500 text-sm">
                     <option value="all" <?= ($status_filter_selected == 'all' || !isset($status_filter_selected)) ? 'selected' : '' ?>>Semua Status</option>
                     <option value="open" <?= ($status_filter_selected == 'open') ? 'selected' : '' ?>>Open</option>
                     <option value="progress" <?= ($status_filter_selected == 'progress') ? 'selected' : '' ?>>Progress</option>
@@ -69,7 +81,7 @@
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
-                        <?php $no = 1; ?>
+                        <?php $no = (isset($pager) && !empty($pager)) ? ($pager->getCurrentPage() - 1) * $pager->getPerPage() + 1 : 1; ?>
                         <?php foreach ($tickets as $ticket): ?>
                             <tr>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?= $no++ ?>.</td>
@@ -131,7 +143,7 @@
             </div>
 
             <div class="md:hidden space-y-4">
-                <?php $no_mobile = 1; ?>
+                <?php $no_mobile = (isset($pager) && !empty($pager)) ? ($pager->getCurrentPage() - 1) * $pager->getPerPage() + 1 : 1; ?>
                 <?php foreach ($tickets as $ticket): ?>
                     <div class="bg-white shadow-md rounded-lg p-4 border border-gray-200">
                         <div class="flex items-center justify-between mb-2">
@@ -185,12 +197,18 @@
                             <button type="button" class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md shadow-sm text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500" onclick="showDeleteModal('<?= base_url('tickets/delete/' . $ticket['id']) ?>')">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 011-1h4a1 1 0 110 2H8a1 1 0 01-1-1zm6 4a1 1 0 10-2 0v3a1 1 0 102 0v-3z" clip-rule="evenodd" />
-                                </svg>
+                            </svg>
                                 Hapus
                             </button>
                         </div>
                     </div>
                 <?php endforeach; ?>
+            </div>
+
+         <div class="mt-4 flex justify-end">
+                <?php if (isset($pager) && !empty($pager)): ?>
+                    <?= $pager->links('default', 'pagination_tailwind') ?>
+                <?php endif; ?>
             </div>
         <?php endif; ?>
     </div>
@@ -213,8 +231,19 @@
 
 <div id="exportModal" class="fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center z-50 hidden">
     <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md mx-auto">
-        <h3 class="text-lg font-bold text-gray-900 mb-4">Detail Tiket (Teks)</h3>
-        <textarea id="exportContent" class="w-full h-64 p-3 border border-gray-300 rounded-md resize-none text-sm font-mono bg-gray-50 focus:outline-none focus:ring-2 focus:ring-amber-500" readonly></textarea>
+        <h3 class="text-lg font-bold text-gray-900 mb-4">Detail Tiket</h3>
+        <div class="space-y-2 text-sm text-gray-700 leading-relaxed">
+            <p><span class="font-bold">Kode Tiket:</span> <span id="export-code"></span></p>
+            <p><span class="font-bold">Tanggal Dibuat:</span> <span id="export-date"></span></p>
+            <p><span class="font-bold">Kategori:</span> <span id="export-category"></span></p>
+            <p><span class="font-bold">Deskripsi:</span> <span id="export-description"></span></p>
+            <p><span class="font-bold">Status:</span> <span id="export-status"></span></p>
+            <p><span class="font-bold">Prioritas:</span> <span id="export-priority"></span></p>
+            <p><span class="font-bold">Customer:</span> <span id="export-customer"></span> (<span id="export-customer-hp"></span>)</p>
+            <p><span class="font-bold">Alamat:</span> <span id="export-customer-address"></span></p>
+            <p><span class="font-bold">Petugas:</span> <span id="export-officer"></span> (<span id="export-officer-role"></span>)</p>
+            <p><span class="font-bold">No. HP Petugas:</span> <span id="export-officer-hp"></span></p>
+        </div>
         <div class="flex justify-end space-x-3 mt-4">
             <button type="button" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors" onclick="hideExportModal()">Tutup</button>
             <button type="button" id="copyExportContent" class="px-4 py-2 bg-amber-600 text-white rounded-md hover:bg-amber-700 transition-colors">Salin Teks</button>
@@ -222,8 +251,21 @@
     </div>
 </div>
 
+<div id="scheduleExportModal" class="fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md mx-auto">
+        <h3 class="text-lg font-bold text-gray-900 mb-4">Jadwal Tiket Hari Ini</h3>
+        <p class="text-sm text-gray-700 mb-4">Daftar tiket yang masih berstatus 'open' hari ini.</p>
+        <textarea id="scheduleExportContent" class="w-full h-64 p-3 border border-gray-300 rounded-md resize-none text-sm font-mono bg-gray-50 focus:outline-none focus:ring-2 focus:ring-amber-500" readonly></textarea>
+        <div class="flex justify-end space-x-3 mt-4">
+            <button type="button" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors" onclick="hideScheduleExportModal()">Tutup</button>
+            <button type="button" id="copyScheduleContent" class="px-4 py-2 bg-amber-600 text-white rounded-md hover:bg-amber-700 transition-colors">Salin Teks</button>
+        </div>
+    </div>
+</div>
+
 <script>
     let deleteFormAction = '';
+    const tickets = <?= json_encode($tickets) ?>;
 
     function showDeleteModal(deleteUrl) {
         deleteFormAction = deleteUrl;
@@ -238,35 +280,50 @@
     }
 
     function showExportModal(ticketDetails) {
-        let content = `--- Detail Tiket ---\n\n`;
-        content += `Kode Tiket: ${ticketDetails.code_ticket}\n`;
-        content += `Tanggal Dibuat: ${ticketDetails.tanggal_buat}\n`;
-        content += `Kategori: ${ticketDetails.keluhan}\n`;
-        content += `Deskripsi: ${ticketDetails.deskripsi || 'Tidak ada deskripsi tambahan'}\n`;
-        content += `Status: ${ticketDetails.status}\n`;
-        content += `Prioritas: ${ticketDetails.prioritas}\n\n`;
-        content += `--- Informasi Pelanggan ---\n\n`;
-        content += `Nama Pelanggan: ${ticketDetails.nama_customer_ticket}\n`;
-        content += `No. HP Pelanggan: ${ticketDetails.no_hp_customer_ticket}\n`;
-        content += `Alamat Pelanggan: ${ticketDetails.alamat_customer_ticket}\n\n`;
-        content += `--- Informasi Petugas ---\n\n`;
-        content += `Nama Petugas: ${ticketDetails.nama_petugas_ticket}\n`;
-        content += `No. HP Petugas: ${ticketDetails.no_hp_petugas_ticket}\n`;
-        content += `Role Petugas: ${ticketDetails.role_petugas_ticket}\n`;
+        document.getElementById('export-code').textContent = ticketDetails.code_ticket;
+        document.getElementById('export-date').textContent = ticketDetails.tanggal_buat;
+        document.getElementById('export-category').textContent = ticketDetails.keluhan;
+        document.getElementById('export-description').textContent = ticketDetails.deskripsi || 'Tidak ada deskripsi tambahan';
+        document.getElementById('export-status').textContent = ticketDetails.status;
+        document.getElementById('export-priority').textContent = ticketDetails.prioritas;
+        document.getElementById('export-customer').textContent = ticketDetails.nama_customer_ticket;
+        document.getElementById('export-customer-hp').textContent = ticketDetails.no_hp_customer_ticket;
+        document.getElementById('export-customer-address').textContent = ticketDetails.alamat_customer_ticket;
+        document.getElementById('export-officer').textContent = ticketDetails.nama_petugas_ticket;
+        document.getElementById('export-officer-role').textContent = ticketDetails.role_petugas_ticket;
+        document.getElementById('export-officer-hp').textContent = ticketDetails.no_hp_petugas_ticket;
 
-        document.getElementById('exportContent').value = content;
         document.getElementById('exportModal').classList.remove('hidden');
     }
 
     function hideExportModal() {
         document.getElementById('exportModal').classList.add('hidden');
-        document.getElementById('exportContent').value = '';
     }
 
     document.getElementById('copyExportContent').addEventListener('click', function() {
-        const exportContent = document.getElementById('exportContent');
-        exportContent.select();
+        let content = `--- Detail Tiket ---\n\n`;
+        content += `Kode Tiket: ${document.getElementById('export-code').textContent}\n`;
+        content += `Tanggal Dibuat: ${document.getElementById('export-date').textContent}\n`;
+        content += `Kategori: ${document.getElementById('export-category').textContent}\n`;
+        content += `Deskripsi: ${document.getElementById('export-description').textContent}\n`;
+        content += `Status: ${document.getElementById('export-status').textContent}\n`;
+        content += `Prioritas: ${document.getElementById('export-priority').textContent}\n\n`;
+        content += `--- Informasi Pelanggan ---\n\n`;
+        content += `Nama Pelanggan: ${document.getElementById('export-customer').textContent}\n`;
+        content += `No. HP Pelanggan: ${document.getElementById('export-customer-hp').textContent}\n`;
+        content += `Alamat Pelanggan: ${document.getElementById('export-customer-address').textContent}\n\n`;
+        content += `--- Informasi Petugas ---\n\n`;
+        content += `Nama Petugas: ${document.getElementById('export-officer').textContent}\n`;
+        content += `No. HP Petugas: ${document.getElementById('export-officer-hp').textContent}\n`;
+        content += `Role Petugas: ${document.getElementById('export-officer-role').textContent}\n`;
+
+        const tempTextarea = document.createElement('textarea');
+        tempTextarea.value = content;
+        document.body.appendChild(tempTextarea);
+        tempTextarea.select();
         document.execCommand('copy');
+        document.body.removeChild(tempTextarea);
+
         const originalText = this.textContent;
         this.textContent = 'Disalin!';
         setTimeout(() => {
@@ -291,6 +348,97 @@
             searchTimeout = setTimeout(submitForm, 500);
         });
     });
+    
+    function exportTicketsToCsv() {
+        if (tickets.length === 0) {
+            alert('Tidak ada data tiket untuk diekspor.');
+            return;
+        }
+
+        const headers = [
+            "No.", "Kode Tiket", "Nama Customer", "No. HP Customer", "Alamat Customer", 
+            "Kategori Tiket", "Deskripsi", "Status", "Prioritas", 
+            "Nama Petugas", "No. HP Petugas", "Role Petugas", "Tanggal Buat"
+        ];
+        
+        let csvContent = headers.join(";") + "\n";
+        
+        const currentPage = (typeof pager !== 'undefined' && pager) ? pager.getCurrentPage() : 1;
+        const perPage = (typeof pager !== 'undefined' && pager) ? pager.getPerPage() : tickets.length;
+        const startNumber = (currentPage - 1) * perPage;
+
+        tickets.forEach((ticket, index) => {
+            let row = [
+                startNumber + index + 1,
+                `"${ticket.code_ticket}"`,
+                `"${ticket.nama_customer_ticket}"`,
+                `"${ticket.no_hp_customer_ticket}"`,
+                `"${ticket.alamat_customer_ticket}"`,
+                `"${ticket.keluhan}"`,
+                `"${ticket.deskripsi.replace(/"/g, '""')}"`,
+                `"${ticket.status}"`,
+                `"${ticket.prioritas}"`,
+                `"${ticket.nama_petugas_ticket}"`,
+                `"${ticket.no_hp_petugas_ticket}"`,
+                `"${ticket.role_petugas_ticket}"`,
+                `"${ticket.tanggal_buat}"`
+            ];
+            csvContent += row.join(";") + "\n";
+        });
+
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement("a");
+        if (link.download !== undefined) {
+            const url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", "data_tickets.csv");
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    }
+
+    function showScheduleExportModal() {
+        const ticketsData = <?= json_encode($tickets) ?>;
+        const today = new Date().toISOString().slice(0, 10);
+        let scheduleContent = `*Ticket Maintenance Teknisi Lapangan*\n\n`;
+        let counter = 1;
+
+        ticketsData.forEach(ticket => {
+            const ticketDate = ticket.tanggal_buat.slice(0, 10);
+            if (ticket.status === 'open' && ticketDate === today) {
+                const customerName = ticket.nama_customer_ticket;
+                const description = ticket.deskripsi || 'Tidak ada deskripsi';
+                scheduleContent += `${counter}. ${ticket.code_ticket} : ${customerName}, Status ${description}\n`;
+                counter++;
+            }
+        });
+
+        if (counter === 1) {
+            scheduleContent += "Tidak ada tiket 'open' hari ini.";
+        }
+
+        document.getElementById('scheduleExportContent').value = scheduleContent;
+        document.getElementById('scheduleExportModal').classList.remove('hidden');
+    }
+
+    function hideScheduleExportModal() {
+        document.getElementById('scheduleExportModal').classList.add('hidden');
+    }
+
+    document.getElementById('copyScheduleContent').addEventListener('click', function() {
+        const scheduleContent = document.getElementById('scheduleExportContent');
+        scheduleContent.select();
+        document.execCommand('copy');
+        const originalText = this.textContent;
+        this.textContent = 'Disalin!';
+        setTimeout(() => {
+            this.textContent = originalText;
+        }, 1500);
+    });
+    
+    
 </script>
 
 <?= $this->endSection() ?>
