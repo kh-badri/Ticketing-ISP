@@ -7,71 +7,84 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <style>
-/* CSS Kustom Select2 untuk tampilan yang responsif dan simetris */
-.select2-container .select2-selection--single {
-    height: 48px !important;
-    display: flex !important;
-    align-items: center !important;
-    border: 1px solid #D1D5DB; /* border-gray-300 */
-    border-radius: 0.5rem; /* rounded-lg */
-    width: 100% !important; /* Memastikan lebar 100% di semua layar */
-}
+    /* CSS Kustom Select2 untuk tampilan yang responsif dan simetris */
+    .select2-container .select2-selection--single {
+        height: 48px !important;
+        display: flex !important;
+        align-items: center !important;
+        border: 1px solid #D1D5DB;
+        /* border-gray-300 */
+        border-radius: 0.5rem;
+        /* rounded-lg */
+        width: 100% !important;
+        /* Memastikan lebar 100% di semua layar */
+    }
 
-.select2-container--default.select2-container--focus .select2-selection--single {
-    border-color: #FBBF24; /* focus:border-amber-500 */
-    box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.5); /* focus:ring-2 */
-}
+    .select2-container--default.select2-container--focus .select2-selection--single {
+        border-color: #FBBF24;
+        /* focus:border-amber-500 */
+        box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.5);
+        /* focus:ring-2 */
+    }
 
-.select2-container--default .select2-selection--single .select2-selection__rendered {
-    line-height: 46px; /* Tinggi baris untuk sentralisasi vertikal */
-    padding-left: 1rem; /* px-4 */
-    padding-right: 1rem; /* px-4 */
-    color: #4B5563; /* text-gray-700 */
-}
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        line-height: 46px;
+        /* Tinggi baris untuk sentralisasi vertikal */
+        padding-left: 1rem;
+        /* px-4 */
+        padding-right: 1rem;
+        /* px-4 */
+        color: #4B5563;
+        /* text-gray-700 */
+    }
 
-/* Mengatur tampilan panah dropdown */
-.select2-container--default .select2-selection--single .select2-selection__arrow {
-    height: 46px;
-    width: 20px;
-    right: 8px;
-}
+    /* Mengatur tampilan panah dropdown */
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        height: 46px;
+        width: 20px;
+        right: 8px;
+    }
 
-/* Mengatur tampilan tombol "x" */
-.select2-container--default .select2-selection--single .select2-selection__clear {
-    color: #F59E0B; /* Warna oranye */
-    font-size: 1.25rem;
-    position: absolute;
-    right: 32px;
-    line-height: 46px;
-}
+    /* Mengatur tampilan tombol "x" */
+    .select2-container--default .select2-selection--single .select2-selection__clear {
+        color: #F59E0B;
+        /* Warna oranye */
+        font-size: 1.25rem;
+        position: absolute;
+        right: 32px;
+        line-height: 46px;
+    }
 
-.select2-container--default .select2-selection--single .select2-selection__clear:hover {
-    color: #D97706; /* Warna oranye gelap saat hover */
-}
+    .select2-container--default .select2-selection--single .select2-selection__clear:hover {
+        color: #D97706;
+        /* Warna oranye gelap saat hover */
+    }
 
-/* Styling dropdown pencarian */
-.select2-dropdown {
-    border-color: #D1D5DB;
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-}
+    /* Styling dropdown pencarian */
+    .select2-dropdown {
+        border-color: #D1D5DB;
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
 
-.select2-results__option {
-    padding: 0.75rem 1rem;
-    font-size: 0.875rem;
-}
+    .select2-results__option {
+        padding: 0.75rem 1rem;
+        font-size: 0.875rem;
+    }
 
-.select2-results__option--highlighted {
-    background-color: #FEF3C7 !important; /* bg-amber-100 */
-    color: #92400E !important; /* text-amber-800 */
-}
+    .select2-results__option--highlighted {
+        background-color: #FEF3C7 !important;
+        /* bg-amber-100 */
+        color: #92400E !important;
+        /* text-amber-800 */
+    }
 
-.select2-search__field {
-    border-radius: 0.5rem !important;
-    border: 1px solid #D1D5DB !important;
-    padding: 0.5rem 1rem !important;
-    font-size: 0.875rem;
-}
+    .select2-search__field {
+        border-radius: 0.5rem !important;
+        border: 1px solid #D1D5DB !important;
+        padding: 0.5rem 1rem !important;
+        font-size: 0.875rem;
+    }
 </style>
 
 <div class="container mx-auto px-4 py-8 sm:px-6 lg:px-8">
@@ -332,7 +345,7 @@
             namaCustomerInput.disabled = !isCustomInput;
             alamatCustomerInput.disabled = !isCustomInput;
             noHpCustomerInput.disabled = !isCustomInput;
-            
+
             // Tambahkan kelas background abu-abu jika disabled
             if (!isCustomInput) {
                 namaCustomerInput.classList.add('bg-gray-100');
