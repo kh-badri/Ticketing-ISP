@@ -1,0 +1,35 @@
+[11-Sep-2025 04:30:51 UTC] PHP Warning:  require(/home/inmeetn1/ticket-bb.inmeet.net//app/Config/Paths.php): Failed to open stream: No such file or directory in /home/inmeetn1/ticket-bb.inmeet.net/index.php on line 51
+[11-Sep-2025 04:30:51 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/inmeetn1/ticket-bb.inmeet.net//app/Config/Paths.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/inmeetn1/ticket-bb.inmeet.net/index.php:51
+Stack trace:
+#0 {main}
+  thrown in /home/inmeetn1/ticket-bb.inmeet.net/index.php on line 51
+[11-Sep-2025 04:30:53 UTC] PHP Warning:  require(/home/inmeetn1/ticket-bb.inmeet.net//app/Config/Paths.php): Failed to open stream: No such file or directory in /home/inmeetn1/ticket-bb.inmeet.net/index.php on line 51
+[11-Sep-2025 04:30:53 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/inmeetn1/ticket-bb.inmeet.net//app/Config/Paths.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/inmeetn1/ticket-bb.inmeet.net/index.php:51
+Stack trace:
+#0 {main}
+  thrown in /home/inmeetn1/ticket-bb.inmeet.net/index.php on line 51
+[11-Sep-2025 04:30:57 UTC] PHP Warning:  require(/home/inmeetn1/ticket-bb.inmeet.net//app/Config/Paths.php): Failed to open stream: No such file or directory in /home/inmeetn1/ticket-bb.inmeet.net/index.php on line 51
+[11-Sep-2025 04:30:57 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/inmeetn1/ticket-bb.inmeet.net//app/Config/Paths.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/inmeetn1/ticket-bb.inmeet.net/index.php:51
+Stack trace:
+#0 {main}
+  thrown in /home/inmeetn1/ticket-bb.inmeet.net/index.php on line 51
+[11-Sep-2025 04:30:59 UTC] PHP Warning:  require(/home/inmeetn1/ticket-bb.inmeet.net//app/Config/Paths.php): Failed to open stream: No such file or directory in /home/inmeetn1/ticket-bb.inmeet.net/index.php on line 51
+[11-Sep-2025 04:30:59 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/inmeetn1/ticket-bb.inmeet.net//app/Config/Paths.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/inmeetn1/ticket-bb.inmeet.net/index.php:51
+Stack trace:
+#0 {main}
+  thrown in /home/inmeetn1/ticket-bb.inmeet.net/index.php on line 51
+[11-Sep-2025 04:31:03 UTC] PHP Warning:  require(/home/inmeetn1/ticket-bb.inmeet.net//app/Config/Paths.php): Failed to open stream: No such file or directory in /home/inmeetn1/ticket-bb.inmeet.net/index.php on line 51
+[11-Sep-2025 04:31:03 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/inmeetn1/ticket-bb.inmeet.net//app/Config/Paths.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/inmeetn1/ticket-bb.inmeet.net/index.php:51
+Stack trace:
+#0 {main}
+  thrown in /home/inmeetn1/ticket-bb.inmeet.net/index.php on line 51
+[11-Sep-2025 04:31:40 UTC] PHP Warning:  require(/home/inmeetn1/ticket-bb.inmeet.net//app/Config/Paths.php): Failed to open stream: No such file or directory in /home/inmeetn1/ticket-bb.inmeet.net/index.php on line 51
+[11-Sep-2025 04:31:40 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/inmeetn1/ticket-bb.inmeet.net//app/Config/Paths.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/inmeetn1/ticket-bb.inmeet.net/index.php:51
+Stack trace:
+#0 {main}
+  thrown in /home/inmeetn1/ticket-bb.inmeet.net/index.php on line 51
+[11-Sep-2025 04:33:03 UTC] PHP Warning:  require(/home/inmeetn1/ticket-bb.inmeet.net//app/Config/Paths.php): Failed to open stream: No such file or directory in /home/inmeetn1/ticket-bb.inmeet.net/index.php on line 51
+[11-Sep-2025 04:33:03 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/inmeetn1/ticket-bb.inmeet.net//app/Config/Paths.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/inmeetn1/ticket-bb.inmeet.net/index.php:51
+Stack trace:
+#0 {main}
+  thrown in /home/inmeetn1/ticket-bb.inmeet.net/index.php on line 51

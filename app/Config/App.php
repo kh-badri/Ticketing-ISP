@@ -16,7 +16,7 @@ class App extends BaseConfig
      *
      * E.g., http://example.com/
      */
-    public string $baseURL = 'https://ticketing.inmeet.net/';
+    public string $baseURL = 'https://ticket-bb.inmeet.net/';
 
 
     /**

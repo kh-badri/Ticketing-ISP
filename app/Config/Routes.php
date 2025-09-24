@@ -63,4 +63,8 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
 
         $routes->post('api/tickets/create', 'Api\TicketController::create');
     });
+     $routes->group('broadcast', function ($routes) {
+        $routes->get('/', 'BroadcastController::index');
+        $routes->post('send', 'BroadcastController::send');
+    });
 });

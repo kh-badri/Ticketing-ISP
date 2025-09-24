@@ -56,6 +56,17 @@
                     <span class="font-medium text-sm sm:text-sm md:text-base leading-tight">Tickets</span>
                 </a>
             </li>
+            <li role="none">
+                <a href="<?= base_url('/broadcast') ?>"
+                    role="menuitem"
+                    class="flex items-center gap-2 sm:gap-2.5 md:gap-3 px-2 sm:px-3 md:px-4 py-2 sm:py-2 md:py-2.5 rounded-lg transition-all duration-200
+        <?= ($active_menu ?? '') === 'broadcast' ? 'bg-amber-600 text-white font-semibold shadow-md' : 'text-black hover:bg-amber-600 hover:text-white' ?>">
+
+                    <i class="fa-solid fa-tower-broadcast w-4 sm:w-4 md:w-5 text-center text-sm sm:text-base" aria-hidden="true"></i>
+
+                    <span class="font-medium text-sm sm:text-sm md:text-base leading-tight">Broadcast</span>
+                </a>
+            </li>
         </ul>
     </nav>
 
